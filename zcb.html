@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .green {
+            color: green;
+        }
+        
+        .red {
+            color: red;
+        }
+        
+        div {
+            border: 1px solid gray;
+            width: 350px;
+            height: 200px;
+            margin: auto;
+            padding-top: 30px;
+        }
+        
+        label {
+            display: inline-block;
+            width: 80px;
+            text-align: right
+        }
+        
+        .btn {
+            margin-left: 100px;
+            margin-top: 30px;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var usename = document.getElementById('usename');
+            var check = document.getElementById('check');
+            username.onblur = function() {
+                var url = 'zcb.php';
+                var xhr = new XMLHttpRequest();
+                xhr.open('post', url);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+                xhr.send('usename=' + this.value);
+                xhr.onreadystatechange = function() {
+                    if (xhr.status == 200 && xhr.readyState == 4) {
+                        var data = JSON.parse(xhr.responseText);
+                        console.log(data);
+                        check.innerHTML = data.msg;
+                        if (data.has) {
+                            check.setAttribute('class', 'red');
+                        } else {
+                            check.setAttribute('class', 'green');
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <form>
+            <label for="username">用户名:</label>
+            <input type="text" id="username" name="username" placeholder="请输入用户名">
+            <span id="check"></span>
+            <br>
+            <label for="password">密码:</label>
+            <input type="password" name="password" id="password" placeholder="请输入密码">
+            <br>
+            <label for="email">邮箱:</label>
+            <input type="text" name="email" id="email" placeholder="请输入邮箱">
+            <br>
+            <input type="submit" value="注册" class="btn">
+        </form>
+    </div>
+</body>
+
+</html>
